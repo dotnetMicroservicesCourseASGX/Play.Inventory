@@ -1,3 +1,4 @@
+﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.2.0
@@ -5,6 +6,8 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{827E0CD3-B72D-47B6-A68D-7590B98EB39B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Play.Inventory.Service", "src\Play.Inventory.Service\Play.Inventory.Service.csproj", "{ACFED1FC-ABDF-B55F-C6F8-2E1ED3DF1894}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Play.Inventory.Contracts", "src\Play.Inventory.Contracts\Play.Inventory.Contracts.csproj", "{9D99A9FB-89B3-442F-936D-E0349BD69536}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,12 +19,17 @@ Global
 		{ACFED1FC-ABDF-B55F-C6F8-2E1ED3DF1894}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ACFED1FC-ABDF-B55F-C6F8-2E1ED3DF1894}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ACFED1FC-ABDF-B55F-C6F8-2E1ED3DF1894}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D99A9FB-89B3-442F-936D-E0349BD69536}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D99A9FB-89B3-442F-936D-E0349BD69536}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D99A9FB-89B3-442F-936D-E0349BD69536}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D99A9FB-89B3-442F-936D-E0349BD69536}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{ACFED1FC-ABDF-B55F-C6F8-2E1ED3DF1894} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
+		{9D99A9FB-89B3-442F-936D-E0349BD69536} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {59EDFB92-875F-42B5-924B-D262F099667A}
