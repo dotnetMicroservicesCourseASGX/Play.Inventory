@@ -30,8 +30,17 @@ public class SubtractItemsConsumer : IConsumer<GrantItems>
 
         if (inventoryItem != null)
         {
+            if (inventoryItem.MessageIds.Contains(context.MessageId.Value))
+            {
+                await context.Publish(new InventoryItemsSubctracted(message.CorrelationId));
+                return;
+            }
+
             inventoryItem.Quantity += message.Quantity;
+            inventoryItem.MessageIds.Add(context.MessageId.Value);
             await inventoryItemsRepository.UpdateAsync(inventoryItem);
+
+            await context.Publish(new InventoryItemUpdated(message.UserId, message.CatalogItemId, inventoryItem.Quantity));
         }
 
         await context.Publish(new InventoryItemsSubctracted(message.CorrelationId));

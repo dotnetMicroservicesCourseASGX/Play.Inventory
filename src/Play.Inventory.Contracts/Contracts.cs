@@ -7,3 +7,5 @@ public record InventoryItemsGranted(Guid CorrelationId);
 public record SubtractItems(Guid UserId, Guid CatalogItemId, int Quantity, Guid CorrelationId);
 
 public record InventoryItemsSubctracted(Guid CorrelationId);
+
+public record InventoryItemUpdated(Guid UserId, Guid CatalogItemId, int NewTotalQuantity);

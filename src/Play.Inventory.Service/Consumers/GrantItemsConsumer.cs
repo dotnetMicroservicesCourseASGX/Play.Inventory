@@ -38,14 +38,25 @@ public class GrantItemsConsumer : IConsumer<GrantItems>
                 AcquiredDate = DateTimeOffset.UtcNow
             };
 
+            // configuring not repeat messages
+            inventoryItem.MessageIds.Add(context.MessageId.Value);
+
             await inventoryItemsRepository.CreateAsync(inventoryItem);
         }
         else
         {
+            if(inventoryItem.MessageIds.Contains(context.MessageId.Value))
+            {
+                await context.Publish(new InventoryItemsGranted(message.CorrelationId));
+                return;
+            }
             inventoryItem.Quantity += message.Quantity;
+            inventoryItem.MessageIds.Add(context.MessageId.Value);
             await inventoryItemsRepository.UpdateAsync(inventoryItem);
         }
 
-        await context.Publish(new InventoryItemsGranted(message.CorrelationId));
+        var itemsGrantedTask = context.Publish(new InventoryItemsGranted(message.CorrelationId));
+        var inventoryItemTask = context.Publish(new InventoryItemUpdated(message.UserId, message.CatalogItemId, inventoryItem.Quantity));
+        await Task.WhenAll(itemsGrantedTask, inventoryItemTask);
     }
 }

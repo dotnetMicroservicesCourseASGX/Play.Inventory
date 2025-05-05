@@ -4,9 +4,11 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using MassTransit;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Play.Common;
+using Play.Inventory.Contracts;
 using Play.Inventory.Service.Dtos;
 using Play.Inventory.Service.Entities;
 
@@ -20,11 +22,15 @@ namespace Play.Inventory.Service.Controllers
         private const string AdminRole = "Admin";
         private readonly IRepository<InventoryItem> itemsRepository;
         private readonly IRepository<CatalogItem> catalogItemsRepository;
+        private readonly IPublishEndpoint publishEndpoint;
 
-        public ItemsController(IRepository<InventoryItem> itemsRepository, IRepository<CatalogItem> catalogItemsRepository)
+        public ItemsController(IRepository<InventoryItem> itemsRepository, 
+        IRepository<CatalogItem> catalogItemsRepository, 
+        IPublishEndpoint publishEndpoint)
         {
             this.itemsRepository = itemsRepository;
             this.catalogItemsRepository = catalogItemsRepository;
+            this.publishEndpoint = publishEndpoint;
         }
 
         [HttpGet]
@@ -83,6 +89,12 @@ namespace Play.Inventory.Service.Controllers
                 inventoryItem.Quantity += grantItemsDto.Quantity;
                 await itemsRepository.UpdateAsync(inventoryItem);
             }
+
+            await publishEndpoint.Publish(new InventoryItemUpdated(
+                inventoryItem.UserId, 
+                inventoryItem.CatalogItemId, 
+                inventoryItem.Quantity));
+            
             return Ok();
         }
     }
