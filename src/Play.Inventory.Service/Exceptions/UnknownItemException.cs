@@ -3,11 +3,11 @@ using System;
 namespace Play.Inventory.Service.Exceptions;
 
 [Serializable]
-internal class UnknowItemException : Exception
+internal class UnknownItemException : Exception
 {
     private Guid ItemId { get; }
 
-    public UnknowItemException(Guid itemId)
+    public UnknownItemException(Guid itemId)
     : base($"Unkown item {itemId}")
     {
         ItemId = itemId;

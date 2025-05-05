@@ -42,7 +42,7 @@ namespace Play.Inventory.Service
 
                 // mass transit will not retry when UnknowItemException is thrown, 
                 // it will consume the message and move it to the error queue
-                retryConfigurator.Ignore(typeof(UnknowItemException));
+                retryConfigurator.Ignore(typeof(UnknownItemException));
             })
             .AddJwtBearerAuthentication();
 

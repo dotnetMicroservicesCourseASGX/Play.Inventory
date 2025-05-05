@@ -23,7 +23,7 @@ public class SubtractItemsConsumer : IConsumer<GrantItems>
     {
         var message = context.Message;
         var item = await catalogItemsRepository.GetAsync(message.CatalogItemId)
-        ?? throw new UnknowItemException(message.CatalogItemId);
+        ?? throw new UnknownItemException(message.CatalogItemId);
 
         var inventoryItem = await inventoryItemsRepository.GetAsync(
                         item => item.UserId == message.UserId && item.CatalogItemId == message.CatalogItemId);
