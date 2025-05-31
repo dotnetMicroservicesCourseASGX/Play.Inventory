@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -11,6 +10,7 @@ using Play.Common;
 using Play.Inventory.Contracts;
 using Play.Inventory.Service.Dtos;
 using Play.Inventory.Service.Entities;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace Play.Inventory.Service.Controllers
 {
