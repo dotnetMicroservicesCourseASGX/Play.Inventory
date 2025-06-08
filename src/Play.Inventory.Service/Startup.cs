@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Play.Common.HealthChecks;
 using Play.Common.Identity;
 using Play.Common.MassTransit;
 using Play.Common.MongoDB;
@@ -37,7 +38,8 @@ namespace Play.Inventory.Service
             services.AddMongo()
             .AddMongoRepository<InventoryItem>("inventoryitems")
             .AddMongoRepository<CatalogItem>("catalogitems")
-            .AddMassTransitWithMessageBroker(Configuration, retryConfigurator =>{
+            .AddMassTransitWithMessageBroker(Configuration, retryConfigurator =>
+            {
                 retryConfigurator.Interval(3, TimeSpan.FromSeconds(5));
 
                 // mass transit will not retry when UnknowItemException is thrown, 
@@ -53,6 +55,8 @@ namespace Play.Inventory.Service
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Play.Inventory.Service", Version = "v1" });
             });
+
+            services.AddHealthChecks().AddMongoDb();
         }
 
         private static void AddCatalogClient(IServiceCollection services)
@@ -116,6 +120,7 @@ namespace Play.Inventory.Service
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapPlayEcnomyHealthChecks();
             });
         }
     }
