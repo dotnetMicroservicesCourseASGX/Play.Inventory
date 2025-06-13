@@ -31,3 +31,20 @@ docker run -it --rm -p 5004:5004 --name inventory -e MongoDbSettings__Connection
 az acr login --name $appname
 docker push "$appname.azurecr.io/play.inventory:$version"
 ```
+
+## Creating the Azure Managed Identity and grantinng access to key vault secrets
+```powershell 
+$namespace="inventory"
+az identity create --resource-group $appname --name $namespace
+
+$IDENTITY_CLIENT_ID=az identity show -g $appname -n $namespace --query clientId -otsv
+az keyvault set-policy -n $appname --secret-permissions get list --spn $IDENTITY_CLIENT_ID
+
+``` 
+
+## Establish the federeated identity credential
+```powershell
+$AKS_OIDC_ISSUER=az aks show -g $appname -n $appname --query "oidcIssuerProfile.issuerUrl" -otsv
+
+az identity federated-credential create --name $namespace --identity-name $namespace --resource-group $appname --issuer $AKS_OIDC_ISSUER --subject "system:serviceaccount:${namespace}:${namespace}-serviceaccount" 
+```
