@@ -15,30 +15,30 @@ spec:
       serviceAccountName: inventory-serviceaccount
       containers:
       - name: inventory
-        image: playeconomyaxsg1.azurecr.io/play.inventory:1.0.4.1
+        image: playeconomyaxsg1.azurecr.io/play.inventory:1.0.6
         env:
-          - name: ServiceSettings__MessageBroker
-            value: SERVICEBUS
-          - name: ServiceSettings__KeyVaultName
-            value: playeconomyaxsg1
-          - name: ServiceSettings__Authority
-            value: https://playeconomyaxsg1.eastus.cloudapp.azure.com/identity-svc
+        - name: ServiceSettings__MessageBroker
+          value: SERVICEBUS
+        - name: ServiceSettings__KeyVaultName
+          value: playeconomyaxsg1
+        - name: ServiceSettings__Authority
+          value: https://playeconomyaxsg1.eastus.cloudapp.azure.com/identity-svc
         resources:
           limits:
-            memory: "128Mi"
-            cpu: "150m"
+            memory: "256Mi"
+            cpu: "500m"
         ports:
         - containerPort: 5004
         livenessProbe:
           httpGet:
             path: /health/live
             port: 5004
-          initialDelaySeconds: 30
+          initialDelaySeconds: 60
         readinessProbe:
           httpGet:
             path: /health/ready
             port: 5004
-          initialDelaySeconds: 30
+          initialDelaySeconds: 60
 
 ---
 apiVersion: v1

@@ -3,7 +3,7 @@ Inventory libraries used by Play Economy services
 
 ## Create and publish package
 ```powershell
-$version="1.0.4.1"
+$version="1.0.6"
 $owner="dotnetMicroservicesCourseASGX"
 $gh_pat="[PAT HERE]"
 
